@@ -16,6 +16,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Detect Branch') {
             steps {
                 script {
@@ -29,8 +35,8 @@ pipeline {
             steps {
                 script {
                     def ip = env.ACTUAL_BRANCH == 'dev' ? DEV_IP :
-                             env.ACTUAL_BRANCH == 'qa'      ? QA_IP :
-                             env.ACTUAL_BRANCH == 'main'    ? PROD_IP : null
+                             env.ACTUAL_BRANCH == 'qa'  ? QA_IP :
+                             env.ACTUAL_BRANCH == 'main' ? PROD_IP : null
 
                     def pm2_name = "${env.ACTUAL_BRANCH}-health"
 
@@ -58,14 +64,15 @@ pipeline {
                         echo "📁 Verificando carpeta de app..."
                         if [ ! -d "$REMOTE_PATH/.git" ]; then
                             git clone $REPO_URL $REMOTE_PATH
+                        else
+                            cd $REMOTE_PATH && git remote set-url origin $REPO_URL
                         fi
 
                         echo "🔁 Pull y deploy..."
                         cd $REMOTE_PATH &&
-                        git remote set-url origin $REPO_URL &&
                         git pull origin ${env.ACTUAL_BRANCH} &&
                         npm ci &&
-                        pm2 restart ${pm2_name} || pm2 start server.js --name ${pm2_name}
+                        pm2 restart ${pm2_name} --update-env || pm2 start server.js --name ${pm2_name} --update-env
                     '
                     '''
                 }
