@@ -11,7 +11,7 @@ pipeline {
         DEV_IP = '3.90.208.162'
         QA_IP  = '13.219.148.93'
         PROD_IP = '54.225.203.34'
-        REMOTE_PATH = '/home/ubuntu/JenkinsTests'
+        REMOTE_PATH = '/home/ubuntu/JenkinsTests/node-healthcheck'
     }
 
     stages {
