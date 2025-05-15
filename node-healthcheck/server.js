@@ -6,11 +6,11 @@ app.use(helmet());
 app.use(express.json());
 
 app.get('/healthcheck', (_req, res) => {
-  res.status(200).json({ status: 'esta es la rama dev', timestamp: new Date().toISOString() });
+  res.status(200).json({ status: 'esta es la rama qa', timestamp: new Date().toISOString() });
 });
 
 app.get('/names', (_req, res) => {
-  res.status(200).json({ author: 'Julio Gallegos' });
+  res.status(200).json({ author: 'Julio Adrian Gallegos' });
 });
 
 const PORT = process.env.PORT || 3000;
