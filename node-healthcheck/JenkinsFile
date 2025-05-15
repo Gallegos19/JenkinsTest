@@ -56,7 +56,7 @@ pipeline {
 
                         echo "📁 Verificando carpeta de app..."
                         if [ ! -d "$REMOTE_PATH/.git" ]; then
-                            git clone https://github.com/roberto14118927/node-healthcheck.git $REMOTE_PATH
+                            git clone https://github.com/Gallegos19/JenkinsTest.git $REMOTE_PATH
                         fi
 
                         echo "🔁 Pull y deploy..."
